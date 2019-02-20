@@ -12,6 +12,22 @@ class HTML{
         budgetTotal.innerHTML = `${amount}`;
         budgetLeft.innerHTML = `${amount}`;
     }
+
+    //Print a message relate to imput
+    printMessage(message, className){
+        const messageWrapper = document.createElement('div');
+        messageWrapper.classList.add('text-center', 'alert', className);
+        messageWrapper.appendChild(document.createTextNode(message));
+
+        //Insert into HTML
+        document.querySelector('.primary').insertBefore(messageWrapper. addExpenseForm);
+
+        //Clear error
+        setTimeout(function(){
+            document.querySelector('.primary .alert').remove();
+            //addExpenseForm.reset();
+        }, 3000);
+    }
 }
 
 //Variables
@@ -41,5 +57,16 @@ function eventListener(){
     //New added expense
     addExpenseForm.addEventListener('submit', function(e){
         e.preventDefault();
+
+        //Read input values
+        const expenseName = document.querySelector('#expense').value;
+        const amount = document.querySelector('#amount').value;
+
+        if(expenseName === '' || amount === ''){
+            console.log(html);
+            html.printMessage('No empty fields', 'alert-danger');
+        }else{
+            
+        }
     });
 }
