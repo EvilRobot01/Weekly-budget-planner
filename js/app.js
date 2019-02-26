@@ -4,6 +4,10 @@ class Budget{
         this.budget = Number(budget);
         this.budgetLeft = this.budget;
     }
+
+    substractFromBudget(amount){
+        return this.budgetLeft -= amount;
+    }
 }
 
 //HTML related
@@ -46,6 +50,22 @@ class HTML{
         //Insert in HTML
         expensesList.appendChild(li);
     }
+
+    trackBudget(amount){
+        const budgetLeftDollars = budget.substractFromBudget(amount);
+        budgetLeft.innerHTML = `
+        ${budgetLeftDollars}
+        `;
+
+        if((budget.budget / 4) > budgetLeftDollars){
+            budgetLeft.parentElement.parentElement.classList.remove('alert-sucess', 'alert-warning');
+            budgetLeft.parentElement.parentElement.classList.add('alert-danger');
+        }else if((budget.budget / 2) > budgetLeftDollars){
+            budgetLeft.parentElement.parentElement.classList.remove('alert-sucess');
+            budgetLeft.parentElement.parentElement.classList.add('alert-warning');
+        }
+
+    }
 }
 
 //Variables
@@ -85,6 +105,8 @@ function eventListener(){
             html.printMessage('No empty fields', 'alert-danger');
         }else{
             html.addExpenseToList(expenseName, amount);
+            html.trackBudget(amount);
+            html.printMessage('Added...', 'alert-success');
         }
     });
 }
